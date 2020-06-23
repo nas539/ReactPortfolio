@@ -10,7 +10,7 @@ export default class PortfolioManger extends Component {
     super();
 
     this.state = {
-      portfolioiItems: []
+      portfolioItems: []
     }
 
     this.handleSuccessfulFormSubmission = this.handleSuccessfulFormSubmission.bind(this);
@@ -18,18 +18,21 @@ export default class PortfolioManger extends Component {
   } 
 
   handleSuccessfulFormSubmission(portfolioItem) {
-
+    this.setState({
+      portfolioItems: [portfolioItem].concat(this.state.portfolioItems)
+    });
   }
   
   handleFormSubmissionError(error) {
     console.log("Error", error)
   }
+
   getPortfolioItems() {
-    axios.get("https://nicholasasharp.devcamp.space/portfolio/portfolio_items", { 
+    axios.get("https://nicholasasharp.devcamp.space/portfolio/portfolio_items?order_by=created_at&direction=desc", { 
       withCredentials: true
     }).then(response => {
       this.setState({
-        portfolioiItems: [...response.data.portfolio_items]
+        portfolioItems: [...response.data.portfolio_items]
       })
     }).catch(error => {
       console.log("error in getting portfolio item", error)
@@ -52,7 +55,7 @@ export default class PortfolioManger extends Component {
           
             <div className="right-column">
               <PortfolioSidebarList 
-                data={this.state.portfolioiItems} />
+                data={this.state.portfolioItems} />
             </div>
           </div>
         )

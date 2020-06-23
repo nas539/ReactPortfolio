@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import axios from 'axios';
 
 export default class PortfolioForm extends Component {
     constructor(props) {
@@ -7,7 +8,7 @@ export default class PortfolioForm extends Component {
         this.state = {
             name: "",
             description: "",
-            category: "",
+            category: "eCommerce",
             position: "",
             url: "",
             thumb_image: "",
@@ -37,7 +38,18 @@ export default class PortfolioForm extends Component {
     }
 
     handleSubmit(event) {
-        this.buildForm();
+       
+        axios.post(
+            "https://nicholasasharp.devcamp.space/portfolio/portfolio_items", 
+            this.buildForm(), 
+            { withCredentials: true }
+            ).then(response => {
+                this.props.handleSuccessfulFormSubmission(response.data.portfolio_item);
+                console.log("response" ,response);
+            }).catch(error => {
+                console.log("portfolio error:", error)
+            })
+
         event.preventDefault();
     }
 
@@ -73,18 +85,20 @@ export default class PortfolioForm extends Component {
                         onChange={this.handleChange}
                         />
 
-                        <input
-                        type="text"
+                        <select
                         name="category"
-                        placeholder="Category"
                         value={this.state.category}
                         onChange={this.handleChange}
-                        />
+                        >
+                            <option value="eCommerce">eCommerce</option>
+                            <option value="Scheduling">Scheduling</option>
+                            <option value="Enterprise">Enterprise</option>
+                        </select>
                    </div>
                    <div>
-                   <input
+                   <textarea
                         type="text"
-                        name="descriptiomn"
+                        name="description"
                         placeholder="Description"
                         value={this.state.description}
                         onChange={this.handleChange}
