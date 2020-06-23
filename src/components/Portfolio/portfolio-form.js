@@ -60,6 +60,7 @@ export default class PortfolioForm extends Component {
         if (this.state.thumb_image) {
             formData.append("portfolio_item[thumb_image]", this.state.thumb_image);
           }
+          
         return formData
     }
 
