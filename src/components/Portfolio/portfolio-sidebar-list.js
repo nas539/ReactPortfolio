@@ -10,11 +10,22 @@ const PortfolioSidebarList = (props) => {
                     <img src={portfolioItem.thumb_image_url} />
                 </div>
                 <div className="text-content">
-                <div className="title">{portfolioItem.name}</div>
-                
-                <a className="delete-icon" onClick={() => props.handleDeleteClick(portfolioItem)}>
-                <FontAwesomeIcon icon="trash" />
-                </a>
+                    <div className="title">{portfolioItem.name}</div>
+                    <div className="actions">
+                        <a
+                        className="action-icon"
+                        onClick={() => props.handleEditClick(portfolioItem)}
+                        >
+                        <FontAwesomeIcon icon="edit" />
+                        </a>
+
+                        <a
+                        className="action-icon"
+                        onClick={() => props.handleDeleteClick(portfolioItem)}
+                        >
+                        <FontAwesomeIcon icon="trash" />
+                        </a>
+                    </div>
                 </div>
             </div>
         )
