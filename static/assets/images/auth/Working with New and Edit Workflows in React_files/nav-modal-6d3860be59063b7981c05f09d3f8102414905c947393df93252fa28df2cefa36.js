@@ -1,0 +1,1 @@
+document.callOnReady(()=>{$(window).resize(function(){$(window).width()>992&&$("#nav-modal").modal("hide")})});
