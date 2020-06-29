@@ -15,11 +15,29 @@ export default class BlogDetail extends Component {
             editMode: false
         };
         this.handleEditClick = this.handleEditClick.bind(this);
+        this.handleFeaturedImageDelete = this.handleFeaturedImageDelete.bind(this);
+        this.handleUpdateFormSubmission = this.handleUpdateFormSubmission.bind(this);
     }
 
+    handleUpdateFormSubmission(blog) {
+        this.setState({
+          blogItem: blog,
+          editMode: false
+        });
+      }
+
+    handleFeaturedImageDelete() {
+        this.setState({
+          blogItem: {
+            featured_image_url: ""
+          }
+        });
+      }
+
     handleEditClick() {
-        console.log("handle edit clicked");
-        this.setState({ editMode: true });
+        if (this.props.loggedInStatus === "LOGGED_IN") {
+            this.setState({ editMode: true });
+          }
     }
 
     getBlogItem() {
@@ -55,7 +73,12 @@ export default class BlogDetail extends Component {
                   return (
                     <div className="content-container">
                       <h1 onClick={this.handleEditClick}>{title}</h1>
-                      <BlogFeaturedImage img={featured_image_url} />
+                      <BlogForm
+                            handleFeaturedImageDelete={this.handleFeaturedImageDelete}
+                            handleUpdateFormSubmission={this.handleUpdateFormSubmission}
+                            editMode={this.state.editMode}
+                            blog={this.state.blogItem}
+                        />
 
                         <div className="content">{ReactHtmlParser(content)}</div>
                         </div>
